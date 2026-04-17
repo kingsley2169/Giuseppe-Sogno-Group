@@ -31,7 +31,7 @@ const SLIDES: HeroSlide[] = [
       "CP6, CP8 and CP10 grades, shipped to Nigeria at enterprise scale.",
     ctaLabel: "Explore supply",
     ctaHref: "/services/edible-fat",
-    image: "/hero/edible-fat.jpg",
+    image: "/hero/oil-plantation.png",
     fallbackBg: "bg-[#3F4F3A]",
   },
   {
@@ -41,7 +41,7 @@ const SLIDES: HeroSlide[] = [
       "Sourced from trusted plantations and shipped in bulk to Nigerian partners.",
     ctaLabel: "See grades",
     ctaHref: "/services/tobacco",
-    image: "/hero/tobacco.jpg",
+    image: "/hero/tobacco.avif",
     fallbackBg: "bg-[#5E4A2E]",
   },
   {
@@ -51,7 +51,7 @@ const SLIDES: HeroSlide[] = [
       "Procurement, shipping and clearing, managed as a single workflow.",
     ctaLabel: "Our corridor",
     ctaHref: "/services/logistics",
-    image: "/hero/logistics.jpg",
+    image: "/hero/seaport.jpg",
     fallbackBg: "bg-[#202A34]",
   },
   {
@@ -61,7 +61,7 @@ const SLIDES: HeroSlide[] = [
       "Registrations, permits and visas handled by a local partner on the ground.",
     ctaLabel: "Start a company",
     ctaHref: "/services/corporate",
-    image: "/hero/corporate.jpg",
+    image: "/hero/business-district.avif",
     fallbackBg: "bg-[#A28A62]",
   },
 ];
@@ -122,6 +122,7 @@ export function HeroCarousel() {
                   }}
                 />
                 <div className="absolute inset-0 bg-linear-to-t from-black/75 via-black/45 to-black/25" />
+                <div className="absolute inset-x-0 top-0 h-36 bg-linear-to-b from-[#111922]/85 via-[#111922]/40 to-transparent sm:h-40 md:h-48" />
                 <div className="relative z-10 mx-auto flex h-full max-w-7xl flex-col items-start justify-end gap-4 px-4 pt-24 pb-20 sm:px-6 sm:pb-24 md:pb-32 lg:px-8">
                   <span className="inline-flex items-center rounded-full bg-white/10 px-3 py-1 text-[11px] font-medium uppercase tracking-[0.18em] text-white ring-1 ring-white/30 backdrop-blur-sm">
                     {slide.eyebrow}
