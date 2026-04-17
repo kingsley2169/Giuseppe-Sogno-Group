@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import Link from "next/link";
-import { ChevronDown, Menu } from "lucide-react";
+import { ChevronDown, Menu, X } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -12,14 +12,6 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import {
-  Sheet,
-  SheetClose,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet";
 
 type NavChild = { label: string; href: string };
 type NavItem = { label: string; href?: string; children?: NavChild[] };
@@ -42,6 +34,7 @@ const NAV_ITEMS: NavItem[] = [
 
 export function SiteHeader() {
   const [scrolled, setScrolled] = React.useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
 
   React.useEffect(() => {
     const getScrollTop = () =>
@@ -74,21 +67,31 @@ export function SiteHeader() {
     };
   }, []);
 
+  React.useEffect(() => {
+    if (!mobileMenuOpen) return;
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [mobileMenuOpen]);
+
   const linkBase =
     "rounded-md px-3 py-2 text-sm font-medium transition-colors";
-  const linkTone = scrolled
-    ? "text-white hover:bg-white/10"
-    : "text-white hover:bg-white/10";
+  const linkTone = "text-white hover:bg-white/10";
 
   return (
-    <header
-      className={cn(
-        "fixed inset-x-0 top-0 z-50 w-full transition-[background-color,box-shadow] duration-300",
-        scrolled
-          ? "bg-[#202A34]/95 text-white shadow-sm supports-backdrop-filter:backdrop-blur-md"
-          : "bg-transparent text-white"
-      )}
-    >
+    <>
+      <header
+        className={cn(
+          "fixed inset-x-0 top-0 z-50 w-full text-white transition-[background-color,box-shadow] duration-300",
+          scrolled || mobileMenuOpen
+            ? "bg-[#202A34] shadow-sm"
+            : "bg-transparent"
+        )}
+      >
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         <Link
           href="/"
@@ -140,76 +143,73 @@ export function SiteHeader() {
           )}
         </nav>
 
-        <Sheet>
-          <SheetTrigger
-            render={
-              <Button
-                variant="ghost"
-                size="icon"
-                aria-label="Open menu"
-                className={cn(
-                  "md:hidden",
-                  scrolled
-                    ? "text-white hover:bg-white/10 hover:text-white"
-                    : "text-white hover:bg-white/10 hover:text-white"
-                )}
-              />
-            }
-          >
+        <button
+          type="button"
+          aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
+          aria-expanded={mobileMenuOpen}
+          onClick={() => setMobileMenuOpen((open) => !open)}
+          className="inline-flex size-10 items-center justify-center rounded-md text-white transition-colors hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#A28A62] md:hidden"
+        >
+          {mobileMenuOpen ? (
+            <X className="size-5" />
+          ) : (
             <Menu className="size-5" />
-          </SheetTrigger>
-          <SheetContent
-            side="right"
-            className="w-72 border-l border-zinc-200 bg-[#202A34] text-zinc-50 shadow-2xl"
-          >
-            <SheetHeader>
-              <SheetTitle className="text-zinc-50">Menu</SheetTitle>
-            </SheetHeader>
-            <nav className="flex flex-col gap-1 px-4 pb-4">
+          )}
+        </button>
+      </div>
+      </header>
+
+      {mobileMenuOpen ? (
+        <div className="fixed inset-0 z-40 md:hidden">
+          <button
+            type="button"
+            aria-label="Close menu"
+            className="absolute inset-0 bg-black/40"
+            onClick={() => setMobileMenuOpen(false)}
+          />
+          <div className="absolute top-16 right-0 h-[calc(100dvh-4rem)] w-72 overflow-y-auto border-l border-white/10 bg-[#202A34] px-4 pb-6 pt-4 text-zinc-50 shadow-2xl">
+            <div className="mb-4 border-b border-white/10 pb-4">
+              <p className="text-base font-semibold tracking-tight text-white">
+                Menu
+              </p>
+            </div>
+            <nav className="flex flex-col gap-1">
               {NAV_ITEMS.map((item) =>
                 item.children ? (
                   <details key={item.label} className="group rounded-md">
-                    <summary className="flex cursor-pointer list-none items-center justify-between rounded-md px-3 py-2 text-sm font-medium hover:bg-muted">
+                    <summary className="flex cursor-pointer list-none items-center justify-between rounded-md px-3 py-2 text-sm font-medium text-white hover:bg-white/10">
                       {item.label}
                       <ChevronDown className="size-4 transition-transform group-open:rotate-180" />
                     </summary>
-                    <ul className="mt-1 ml-2 flex flex-col border-l pl-3">
+                    <ul className="mt-1 ml-2 flex flex-col gap-1 border-l border-white/15 pl-3">
                       {item.children.map((child) => (
                         <li key={child.href}>
-                          <SheetClose
-                            nativeButton={false}
-                            render={
-                              <Link
-                                href={child.href}
-                                className="block rounded-md px-3 py-2 text-sm text-muted-foreground hover:bg-muted hover:text-foreground"
-                              />
-                            }
+                          <Link
+                            href={child.href}
+                            className="block rounded-md px-3 py-2 text-sm text-white/72 transition-colors hover:bg-white/10 hover:text-white"
+                            onClick={() => setMobileMenuOpen(false)}
                           >
                             {child.label}
-                          </SheetClose>
+                          </Link>
                         </li>
                       ))}
                     </ul>
                   </details>
                 ) : (
-                  <SheetClose
+                  <Link
                     key={item.label}
-                    nativeButton={false}
-                    render={
-                      <Link
-                        href={item.href!}
-                        className="rounded-md px-3 py-2 text-sm font-medium hover:bg-muted"
-                      />
-                    }
+                    href={item.href!}
+                    className="rounded-md px-3 py-2 text-sm font-medium text-white transition-colors hover:bg-white/10"
+                    onClick={() => setMobileMenuOpen(false)}
                   >
                     {item.label}
-                  </SheetClose>
+                  </Link>
                 )
               )}
             </nav>
-          </SheetContent>
-        </Sheet>
-      </div>
-    </header>
+          </div>
+        </div>
+      ) : null}
+    </>
   );
 }
