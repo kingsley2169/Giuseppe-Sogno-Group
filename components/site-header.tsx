@@ -23,6 +23,7 @@ import {
 
 type NavChild = { label: string; href: string };
 type NavItem = { label: string; href?: string; children?: NavChild[] };
+const SCROLL_THRESHOLD = 20;
 
 const NAV_ITEMS: NavItem[] = [
   { label: "Home", href: "/" },
@@ -43,24 +44,48 @@ export function SiteHeader() {
   const [scrolled, setScrolled] = React.useState(false);
 
   React.useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    const getScrollTop = () =>
+      window.scrollY ||
+      window.pageYOffset ||
+      document.documentElement.scrollTop ||
+      document.body.scrollTop ||
+      window.visualViewport?.pageTop ||
+      0;
+
+    const updateScrolled = () => {
+      setScrolled(getScrollTop() > SCROLL_THRESHOLD);
+    };
+
+    const syncOnNextFrame = () => {
+      window.requestAnimationFrame(updateScrolled);
+    };
+
+    syncOnNextFrame();
+    window.addEventListener("scroll", updateScrolled, { passive: true });
+    window.addEventListener("resize", syncOnNextFrame);
+    window.addEventListener("orientationchange", syncOnNextFrame);
+    window.addEventListener("pageshow", syncOnNextFrame);
+
+    return () => {
+      window.removeEventListener("scroll", updateScrolled);
+      window.removeEventListener("resize", syncOnNextFrame);
+      window.removeEventListener("orientationchange", syncOnNextFrame);
+      window.removeEventListener("pageshow", syncOnNextFrame);
+    };
   }, []);
 
   const linkBase =
     "rounded-md px-3 py-2 text-sm font-medium transition-colors";
   const linkTone = scrolled
-    ? "text-foreground hover:bg-muted"
+    ? "text-white hover:bg-white/10"
     : "text-white hover:bg-white/10";
 
   return (
     <header
       className={cn(
-        "fixed inset-x-0 top-0 z-50 w-full transition-colors duration-300",
+        "fixed inset-x-0 top-0 z-50 w-full transition-[background-color,box-shadow] duration-300",
         scrolled
-          ? "bg-[#202A34] text-white shadow-sm"
+          ? "bg-[#202A34]/95 text-white shadow-sm supports-backdrop-filter:backdrop-blur-md"
           : "bg-transparent text-white"
       )}
     >
@@ -83,7 +108,7 @@ export function SiteHeader() {
                       className={cn(
                         "gap-1",
                         scrolled
-                          ? "text-foreground hover:bg-muted"
+                          ? "text-white hover:bg-white/10 hover:text-white"
                           : "text-white hover:bg-white/10 hover:text-white"
                       )}
                     />
@@ -125,7 +150,7 @@ export function SiteHeader() {
                 className={cn(
                   "md:hidden",
                   scrolled
-                    ? "text-foreground hover:bg-muted"
+                    ? "text-white hover:bg-white/10 hover:text-white"
                     : "text-white hover:bg-white/10 hover:text-white"
                 )}
               />
