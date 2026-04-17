@@ -1,8 +1,14 @@
 import { AboutTeaser } from "@/components/about-teaser";
+import { AboutTeaserAsymmetric } from "@/components/about-teaser-asymmetric";
 import { BusinessGrid } from "@/components/business-grid";
+import { BusinessLedger } from "@/components/business-ledger";
 import { ContactCtaBand } from "@/components/contact-cta-band";
+import { ContactCtaMinimal } from "@/components/contact-cta-minimal";
 import { HeroCarousel } from "@/components/hero-carousel";
+import { HeroSplit } from "@/components/hero-split";
 import { IntroBand } from "@/components/intro-band";
+import { ManifestoStrip } from "@/components/manifesto-strip";
+import { StatsBand } from "@/components/stats-band";
 import { WhyUs } from "@/components/why-us";
 
 const metadata = {
@@ -16,12 +22,20 @@ export { metadata };
 export default function Home() {
 	return (
 		<>
-			<HeroCarousel />
+			<HeroSplit />
+			<ManifestoStrip />
+			<BusinessLedger />
+			<StatsBand />
+			<AboutTeaserAsymmetric />
+			<ContactCtaMinimal />
+
+			{/* version 1.0 */}
+			{/* <HeroCarousel />
 			<IntroBand />
 			<BusinessGrid />
 			<WhyUs />
 			<AboutTeaser />
-			<ContactCtaBand />
+			<ContactCtaBand /> */}
 		</>
 	);
 }
