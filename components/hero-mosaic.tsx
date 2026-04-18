@@ -74,11 +74,11 @@ export function HeroMosaic() {
               Indonesia &nbsp;&#8596;&nbsp; Nigeria
             </span>
             <h1 className="font-serif text-[2rem] font-normal leading-[1.08] tracking-tight text-white wrap-break-word sm:text-5xl lg:text-4xl xl:text-5xl 2xl:text-[3.25rem]">
-              Four businesses, one operator, across two markets.
+              Four businesses. One operator.
             </h1>
             <p className="max-w-md text-sm leading-relaxed text-zinc-300 sm:text-base">
-              Bulk supply, freight coordination and local company setup &mdash;
-              handled by people on the ground in both Indonesia and Nigeria.
+              Bulk supply, freight and local setup &mdash; on the ground in
+              Indonesia and Nigeria.
             </p>
           </div>
           <Link
