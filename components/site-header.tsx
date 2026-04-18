@@ -156,7 +156,7 @@ export function SiteHeader() {
           aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
           aria-expanded={mobileMenuOpen}
           onClick={() => setMobileMenuOpen((open) => !open)}
-          className="inline-flex size-10 items-center justify-center rounded-md text-white transition-colors hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#A28A62] md:hidden"
+          className="relative z-50 -mr-2 inline-flex size-11 touch-manipulation cursor-pointer items-center justify-center rounded-md text-white transition-colors hover:bg-white/10 active:bg-white/15 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#A28A62] md:hidden"
         >
           {mobileMenuOpen ? (
             <X className="size-5" />
