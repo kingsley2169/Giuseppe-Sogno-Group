@@ -177,7 +177,7 @@ export function SiteHeader() {
             className="absolute inset-0 bg-black/40"
             onClick={() => setMobileMenuOpen(false)}
           />
-          <div className="absolute top-16 right-0 h-[calc(100dvh-4rem)] w-72 overflow-y-auto border-l border-white/10 bg-[#202A34] px-4 pb-6 pt-4 text-zinc-50 shadow-2xl">
+          <div className="absolute top-16 right-0 bottom-0 w-72 overflow-y-auto border-l border-white/10 bg-[#202A34] px-4 pb-6 pt-4 text-zinc-50 shadow-2xl">
             <div className="mb-4 border-b border-white/10 pb-4">
               <p className="text-base font-semibold tracking-tight text-white">
                 Menu
