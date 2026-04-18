@@ -18,7 +18,15 @@ type NavItem = { label: string; href?: string; children?: NavChild[] };
 const SCROLL_THRESHOLD = 20;
 
 const NAV_ITEMS: NavItem[] = [
-  { label: "Home", href: "/" },
+  // { label: "Home", href: "/" },
+  {
+    label: "Homepages",
+    children: [
+      { label: "Version 1", href: "/" },
+      { label: "Version 2", href: "/home-v2" },
+      { label: "Version 3", href: "/home-v3" },
+    ],
+  },
   {
     label: "Businesses",
     children: [

@@ -22,20 +22,13 @@ export { metadata };
 export default function Home() {
 	return (
 		<>
-			<HeroSplit />
-			<ManifestoStrip />
-			<BusinessLedger />
-			<StatsBand />
-			<AboutTeaserAsymmetric />
-			<ContactCtaMinimal />
 
-			{/* version 1.0 */}
-			{/* <HeroCarousel />
+			<HeroCarousel />
 			<IntroBand />
 			<BusinessGrid />
 			<WhyUs />
 			<AboutTeaser />
-			<ContactCtaBand /> */}
+			<ContactCtaBand />
 		</>
 	);
 }
