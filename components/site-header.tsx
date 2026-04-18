@@ -63,12 +63,14 @@ export function SiteHeader() {
 
     syncOnNextFrame();
     window.addEventListener("scroll", updateScrolled, { passive: true });
+    document.addEventListener("scroll", updateScrolled, { passive: true });
     window.addEventListener("resize", syncOnNextFrame);
     window.addEventListener("orientationchange", syncOnNextFrame);
     window.addEventListener("pageshow", syncOnNextFrame);
 
     return () => {
       window.removeEventListener("scroll", updateScrolled);
+      document.removeEventListener("scroll", updateScrolled);
       window.removeEventListener("resize", syncOnNextFrame);
       window.removeEventListener("orientationchange", syncOnNextFrame);
       window.removeEventListener("pageshow", syncOnNextFrame);
